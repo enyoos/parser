@@ -1,4 +1,6 @@
 com\parse\equation\Parser.class
 com\parse\equation\Token.class
 com\parse\equation\Node.class
+com\parse\equation\Value.class
+com\parse\equation\GenericToken.class
 com\parse\equation\Tree.class

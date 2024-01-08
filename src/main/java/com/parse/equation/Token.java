@@ -1,6 +1,8 @@
 package com.parse.equation;
 
-public enum Token {
+import com.parse.equation.GenericToken;
+
+public enum Token implements GenericToken{
 	
 	COMMA( ',' ),
 	ADDITION ( '+' ),
