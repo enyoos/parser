@@ -18,15 +18,13 @@ public final class Tree
 	{
 
 		// root node
-		Node root = new Node ( 'c' );
+		Node root = new Node ( '1' );
+
 
 		// Create a new tree
 		Tree tree = new Tree ( root );
-		tree.add ( new Node ( 't' ) ); 
-		tree.add ( new Node ( 'a' ) );
-		tree.add ( new Node ( 'b' ) );
-		tree.add ( new Node ( 'k' ) );
-		tree.add ( new Node ( 's' ) );
+		tree.add ( new Node ( '+' ) );
+		tree.add ( new Node ( '1' ) );
 
 		tree.print();
 	}
@@ -34,12 +32,14 @@ public final class Tree
 	// 'appending' node to the tree
 	private Node pushNode ( Node node, Node current )
 	{
-		System.out.println( "the current : " + current );
+		// first check if the node is null
 		if ( current == null ) return node;
+		else if ( isOP ( node.value ) ){ return pushNode ( current, node ); }
+
 		if ( current.l == null )  current.l = pushNode ( node, current.l ) ;
 		else if ( current.r == null )  current.r = pushNode ( node, current.r ) ;
 		else { 
-			current.l = pushNode ( node, current.l );
+			current.r = pushNode ( node, current.r );
 		}
 
 		return current;
@@ -48,12 +48,6 @@ public final class Tree
 
 	public void add ( Node node ) { this.root = pushNode ( node, root); }
 
-	// shift the node place by one
-	// similar to shifting the idx of an element by one in an array.
-	public Node shiftNodeByOne ( Node node, Node current )
-	{
-		return null;
-	}
 
 	public static boolean isOP ( char value )
 	{
