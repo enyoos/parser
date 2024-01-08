@@ -25,6 +25,8 @@ public final class Tree
 		Tree tree = new Tree ( root );
 		tree.add ( new Node ( '+' ) );
 		tree.add ( new Node ( '1' ) );
+		tree.add ( new Node ( '+' ) );
+		tree.add ( new Node ( '2' ) );
 
 		tree.print();
 	}
@@ -34,7 +36,14 @@ public final class Tree
 	{
 		// first check if the node is null
 		if ( current == null ) return node;
-		else if ( isOP ( node.value ) ){ return pushNode ( current, node ); }
+		else if ( isOP ( node.value ) ){ 
+			if ( isOP ( current.value ) )
+			{
+				current.r = pushNode ( current.r, node );
+				return current;
+			}
+			return pushNode ( current, node );
+		}
 
 		if ( current.l == null )  current.l = pushNode ( node, current.l ) ;
 		else if ( current.r == null )  current.r = pushNode ( node, current.r ) ;
