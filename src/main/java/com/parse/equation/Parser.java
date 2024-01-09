@@ -14,10 +14,12 @@ public final class Parser {
 
 	public static void main( String... args )
 	{
-		String input = "1+1+1";
+		String input = "1+1+1+1";
 		Parser parser = new Parser ( input );
 
 		parser.ast.print();
+		double result = parser.eval();
+		System.out.println( result );
 	}
 
 	// parsing
@@ -65,6 +67,76 @@ public final class Parser {
 		makeTree();
 	}
 
+
+
+	public double eval ( )
+	{
+		return eval (  this.ast.root );	
+	}
+
+	// evaluates the expression
+	private double eval( Node current )
+	{
+
+		System.out.println( current );
+
+		// we need to eval the ast
+		if ( Tree.isOP ( current.value ) )
+		{
+			Node l = current.l;
+			Node r = current.r;
+
+
+			if ( ! ( Tree.isOP ( l.value ) || Tree.isOP ( r.value ) ) )
+			{
+				double n1 = Double.parseDouble ( String.valueOf ( l.value ) );
+				double n2 = Double.parseDouble ( String.valueOf ( r.value ) );
+
+				return compute (n1, n2, current.value );
+			}
+
+			else 
+			{
+				double n1 = eval ( l );
+				double n2 = eval ( r );
+
+				return compute ( n1, n2 , current.value ); 
+			}
+	
+		}
+		else
+		{
+			double ret = Double.parseDouble( String.valueOf ( current.value ) );
+			System.out.println( "ret : " + ret );
+			return ret;
+		}
+	}
+
+	private double compute ( double n1, double n2, char op )
+	{
+
+		switch ( op )
+		{
+			case '+':
+				return n1 + n2;
+			case '-':
+				return n1 - n2;
+			case '*':
+				return n1 * n2;
+			case '(':
+				return 0;
+			case ')':
+				return 0;
+			case ',':
+				return 0;
+			case '.':
+				return 0;
+			case ' ':
+				return 0;
+			default:
+				return 0;
+		}
+	}
 
 	private void makeTree ( )
 	{

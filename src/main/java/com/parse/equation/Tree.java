@@ -10,13 +10,14 @@ import java.lang.StringBuilder ;
 // that can have multiple childrens
 public final class Tree 
 {
-	private Node root;
+	public Node root;
 	public Tree ()            {}
 	public Tree ( Node root ) { this.root = root; }
 	
 	public static void main ( String... args ) 
 	{
 
+		// 1 + 1 + 1 + 1
 		// root node
 		Node root = new Node ( '1' );
 
@@ -26,7 +27,9 @@ public final class Tree
 		tree.add ( new Node ( '+' ) );
 		tree.add ( new Node ( '1' ) );
 		tree.add ( new Node ( '+' ) );
-		tree.add ( new Node ( '2' ) );
+		tree.add ( new Node ( '1' ) );
+		tree.add ( new Node ( '+' ) );
+		tree.add ( new Node ( '1' ) );
 
 		tree.print();
 	}
@@ -34,21 +37,24 @@ public final class Tree
 	// 'appending' node to the tree
 	private Node pushNode ( Node node, Node current )
 	{
-		// first check if the node is null
-		if ( current == null ) return node;
-		else if ( isOP ( node.value ) ){ 
-			if ( isOP ( current.value ) )
-			{
-				current.r = pushNode ( current.r, node );
-				return current;
+		if ( isOP ( current.value ) )
+		{
+			if ( current.l == null ) current.l = node;	
+			else if ( current.r == null ) current.r = node;	
+			else {
+				current.r = pushNode ( current.r, node);
 			}
-			return pushNode ( current, node );
 		}
-
-		if ( current.l == null )  current.l = pushNode ( node, current.l ) ;
-		else if ( current.r == null )  current.r = pushNode ( node, current.r ) ;
-		else { 
-			current.r = pushNode ( node, current.r );
+		else
+		{
+			if ( isOP ( node.value ))
+			{
+				Node tp = current;
+				current = node;
+				if ( current.l == null ) current.l = tp;
+				else if ( current.r == null ) current.r = tp;
+				else current.r = pushNode ( tp, current );
+			}
 		}
 
 		return current;
