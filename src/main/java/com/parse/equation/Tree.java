@@ -71,6 +71,10 @@ public final class Tree
 		{
 			case '+':
 				break;
+			case '^':
+				break;
+			case '/':
+				break;
 			case '-':
 				break;
 			case '*':
@@ -88,6 +92,31 @@ public final class Tree
 
 		return return_;
 	}
+
+	public static boolean isComputeOp ( char ch )
+	{
+		boolean return_ = true;
+
+		switch ( ch )
+		{
+			case '+':
+				break;
+			case '^':
+				break;
+			case '/':
+				break;
+			case '-':
+				break;
+			case '*':
+				break;
+			default :
+				return_ = false;
+				break;
+		}
+
+		return return_;
+	}
+
 
 	public void traversePreOrder(StringBuilder sb, String padding, String pointer, Node current ) {
 	    if (current != null) {

@@ -68,7 +68,35 @@ read the right node -> 1
 
 
 
+2 * 3 / 3 + 3  -> [ 2, *, 3, /, 3, +, 3 ], this counts as a whole expression
 
 
+2 * 3 / 3 + 3
+
+// the good thing.
+    +
+3       /
+    3       *
+        2       3
+
+step... by stepp
+
+    *
+2       3
 
 
+    /
+3        *
+    2        3
+
+    +
+3       /
+    3       *
+        2       3
+
+there must a function that compares the priority of ops.
+( make a map of the ops with there're actual prio. values );
+
+idea : preprocess the array and form grouping ( expression ... , term ...)
+idea : the pushing order ( check the operator before PEMDAS -> p, exp, mul, div, a, s)
+       the s op, should be the first (root) ( in theory... ).

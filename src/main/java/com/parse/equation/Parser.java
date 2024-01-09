@@ -14,7 +14,7 @@ public final class Parser {
 
 	public static void main( String... args )
 	{
-		String input = "1+1+1+1";
+		String input = "2 * 3 / 3 + 3";
 		Parser parser = new Parser ( input );
 
 		parser.ast.print();
@@ -38,6 +38,9 @@ public final class Parser {
 				case '+':
 					this.tokens.add ( '+' );
 					break;
+				case '/':
+					this.tokens.add ( '/' );
+					break;
 				case '-':
 					this.tokens.add ( '-' );
 					break;
@@ -49,6 +52,9 @@ public final class Parser {
 					break;
 				case ')':
 					this.tokens.add ( ')' );
+					break;
+				case '^':
+					this.tokens.add ( '^' );
 					break;
 				case ',':
 					this.tokens.add ( ',' );
@@ -121,6 +127,10 @@ public final class Parser {
 				return n1 + n2;
 			case '-':
 				return n1 - n2;
+			case '^':
+				return Math.pow ( n1, n2 );
+			case '/':
+				return n1 / n2;
 			case '*':
 				return n1 * n2;
 			case '(':
