@@ -71,14 +71,19 @@ read the right node -> 1
 2 * 3 / 3 + 3  -> [ 2, *, 3, /, 3, +, 3 ], this counts as a whole expression
 
 
-2 * 3 / 3 + 3
+2 + 3 / 3 + 3
 
 // the good thing.
-    +
-3       /
-    3       *
-        2       3
 
+  
+  / -> 3
+  ^ -> 2
+
+    / -> :q
+
+    + -> 5
+
+    
 step... by stepp
 
     *

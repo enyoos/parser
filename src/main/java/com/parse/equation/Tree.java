@@ -3,6 +3,7 @@ package com.parse.equation;
 import com.parse.equation.Node;
 import com.parse.equation.Token;
 import java.lang.StringBuilder ;
+import java.util.HashMap;
 
 // our class Tree will help
 // us to parse inputs
@@ -10,6 +11,31 @@ import java.lang.StringBuilder ;
 // that can have multiple childrens
 public final class Tree 
 {
+	// char ( op ) priority of the op
+	private static final HashMap<Character, Integer> priorityMap;
+	static {
+
+		// PEMDAS -> parenth, exp, mult, div, add, sub
+		// for now we're not involving the parenth
+		priorityMap = new HashMap<>();
+		priorityMap.put (
+			'+', 5
+		);
+		priorityMap.put (
+			'-', 5
+		);
+		priorityMap.put (
+			'^', 2
+		);
+		priorityMap.put (
+			'*', 3
+		);
+		priorityMap.put (
+			'/', 3
+		);
+
+	}
+
 	public Node root;
 	public Tree ()            {}
 	public Tree ( Node root ) { this.root = root; }
@@ -17,34 +43,60 @@ public final class Tree
 	public static void main ( String... args ) 
 	{
 
-		// 1 + 1 + 1 + 1
+		// 1 * 6 + 6
+		// 6 + 1 * 6
 		// root node
-		Node root = new Node ( '1' );
+		Node root = new Node ( '6' );
 
 
 		// Create a new tree
 		Tree tree = new Tree ( root );
 		tree.add ( new Node ( '+' ) );
 		tree.add ( new Node ( '1' ) );
-		tree.add ( new Node ( '+' ) );
-		tree.add ( new Node ( '1' ) );
-		tree.add ( new Node ( '+' ) );
-		tree.add ( new Node ( '1' ) );
+		tree.add ( new Node ( '*' ) );
+		tree.add ( new Node ( '6' ) );
 
 		tree.print();
+	}
+
+
+	private boolean checkIfFirstNodeHasBiggerPriority ( Node n1, Node n2 )
+	{ 
+		int value1 = priorityMap.get ( n1.value ).intValue(); 
+		int value2 = priorityMap.get ( n2.value ).intValue() ; 
+		return  value1 < value2; 
 	}
 
 	// 'appending' node to the tree
 	private Node pushNode ( Node node, Node current )
 	{
+
 		if ( isOP ( current.value ) )
 		{
+
+
 			if ( current.l == null ) current.l = node;	
 			else if ( current.r == null ) current.r = node;	
 			else {
-				current.r = pushNode ( current.r, node);
+				boolean isNodeOP = isOP ( node.value );
+
+				if ( isNodeOP )
+				{
+					if ( checkIfFirstNodeHasBiggerPriority( current, node ) )
+					{
+						root = node;
+						root.r = current;
+						current = root;
+					}
+					else
+					{
+						current.r = pushNode( current.r, node );
+					}
+				}
+				else { current.r = pushNode ( current.r, node); }
 			}
 		}
+
 		else
 		{
 			if ( isOP ( node.value ))
