@@ -105,3 +105,69 @@ there must a function that compares the priority of ops.
 idea : preprocess the array and form grouping ( expression ... , term ...)
 idea : the pushing order ( check the operator before PEMDAS -> p, exp, mul, div, a, s)
        the s op, should be the first (root) ( in theory... ).
+
+
+
+
+
+(1 + 2) * 3 ( A )
+ 1 + 2  * 3 ( B )
+ 
+ 
+ 
+B :
+
+    +
+1       *
+    2       3
+ 
+
+A :
+
+
+    *
+3       +
+    1       2
+ 
+
+
+    +
+1       2
+
+
+
+
+// idea, ignore the right parenth
+// just take into account the left parenth
+
+
+    +
+1       2
+
+( we encouter a LParenth ), (s) means null root
+
+   (s)
+        +
+    1       2
+
+
+    *
+3       +
+    1       2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
